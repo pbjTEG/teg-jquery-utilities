@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TEGUtilities windowSize Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../src/teg-jquery-utilities.js"></script>
+	<script>
+			jQuery.windowSize.init({
+				                       mobileMaxWidth : 600,
+				                       tabletMinWidth : 599,
+				                       tabletMaxWidth : 961,
+				                       desktopMinWidth: 968,
+				                       tallMinHeight  : 820,
+				                       // allow customizable callback
+				                       afterWindowSize: function() {
+					                       return 'afterWindowSize() has run';
+				                       }, // end afterWindowSize()
+			                       });
+	</script>
+</head>
+<body>
+<h1>TEGUtilities windowSize Test</h1>
+</body>
+</html>

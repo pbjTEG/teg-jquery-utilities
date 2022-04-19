@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TEG jQuery Utilities</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--suppress JSUnresolvedLibraryURL -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+	<script src="../src/teg-jquery-utilities.js?" type="text/javascript"></script>
+	<script>
+		jQuery(document).ready(function() {
+			// initialize windowSize with default values
+			jQuery.windowSize.init({
+				                       afterWindowSize: function() {
+
+					                       if (console) {
+						                       console.log('afterWindowSize');
+
+						                       for (var key in this) {
+
+							                       if (this.hasOwnProperty(key)) {
+								                       var value = this[key];
+								                       console.log('  ' + key + ' = ' + value);
+
+								                       for (var key2 in value) {
+
+									                       if (value.hasOwnProperty(key2)) {
+										                       var value2 = value[key2];
+										                       console.log('    ' + key2 + ' = ' + value2);
+									                       }
+								                       }
+							                       }
+						                       }
+					                       } // end log
+					                       jQuery('#isMobileValue').text(jQuery.windowSize.isMobile);
+					                       jQuery('#isTabletValue').text(jQuery.windowSize.isTablet);
+					                       jQuery('#isDesktopValue').text(jQuery.windowSize.isDesktop);
+					                       jQuery('#isTallValue').text(jQuery.windowSize.isTall);
+				                       }, // end afterWindowSize()
+			                       });
+			jQuery(window).resize(jQuery.debounce(jQuery.windowSize.update, 400));
+
+		}); // end jQuery(document).ready
+	</script>
+</head>
+<body>
+<form action="#" method="get">
+	<h1>TEG jQuery Utilities</h1>
+	<h2>$.between</h2>
+	<h2>$.fn.between</h2>
+	<h2>$.fn.fieldType</h2>
+	<h2>$.fn.getAny</h2>
+	<h2>$.fn.setAny</h2>
+	<h2>$.windowSize</h2>
+	<table>
+		<tr>
+			<th>Property</th>
+			<th>Value</th>
+		</tr>
+		<tr>
+			<td>windowSize.isMobile</td>
+			<td id="isMobileValue"></td>
+		</tr>
+		<tr>
+			<td>windowSize.isTablet</td>
+			<td id="isTabletValue"></td>
+		</tr>
+		<tr>
+			<td>windowSize.isDesktop</td>
+			<td id="isDesktopValue"></td>
+		</tr>
+		<tr>
+			<td>windowSize.isTall</td>
+			<td id="isTallValue"></td>
+	</table>
+</form>
+<script>
+	jQuery.preloadImages('https://engage.pmgdirect.net/NGA/images/FBShareVanGogh.jpg',
+	                     'https://engage.pmgdirect.net/NGA/images/Loading_Animation.gif',
+	                     'https://engage.pmgdirect.net/NGA/images/NGA%20iPhone%20Wallpaper%20%28final%29.jpg');
+</script>
+</body>
+</html>

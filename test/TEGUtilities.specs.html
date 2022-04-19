@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--suppress JSUnresolvedLibraryURL -->
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TEG jQuery Utilities</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine-html.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/boot.js"></script>
+	<script type="text/javascript" src="../src/teg-jquery-utilities.js"></script>
+	<script type="text/javascript" src="TEGUtilities.specs.js"></script>
+</head>
+<body>
+<!-- Jasmine will generate the test results. -->
+<form id="utilityForm" action="#" method="get" style="display: none;">
+	<h1>TEG jQuery Utilities Test Content</h1>
+	<fieldset id="between">
+		<legend>jQuery.between() and jQuery.fn.between()</legend>
+		<label for="betweenField">Is this value between 1 and 10?</label>
+		<input type="text" id="betweenField" value="5" disabled="disabled" /><br />
+		<label for="betweenFieldNotInclusive">Is this value between 1 and 10, inclusive?</label>
+		<input type="text" id="betweenFieldNotInclusive" value="10" disabled="disabled" />
+	</fieldset>
+	<fieldset id="fieldType">
+		<legend>jQuery.fn.fieldType() and getAny()</legend>
+		<label for="button">Button</label>
+		<input type="button" id="button" name="button" value="Button" /><br />
+		<label><input type="checkbox" id="checkbox" value="checkbox" checked="checked" /> Checkbox</label><br />
+		<div id="div" style="border: 1px solid red; padding: 10pt;">
+			<p>This is a div, not an input field.</p>
+		</div>
+		<label for="hidden">hidden</label>
+		<input type="hidden" id="hidden" name="hidden" value="hidden value" /><br />
+		<label><input type="radio" id="radio01" name="radio" value="radio01" checked="checked" /> Radio 01</label><br />
+		<label><input type="radio" id="radio02" name="radio" value="radio02" /> Radio 02</label><br />
+		<label for="select-one">Select One</label>
+		<select id="select-one">
+			<option value="anoption" selected="selected">An option</option>
+			<option>Another option</option>
+		</select><br />
+		<label for="select-multiple">Select Multiple</label>
+		<select id="select-multiple" multiple="multiple">
+			<option value="anoption" selected="selected">An option</option>
+			<option value="anotheroption" selected="selected">Another option</option>
+			<option value="athirdoption">A third option</option>
+		</select><br />
+		<label for="text">Text</label>
+		<input type="text" id="text" value="text" /><br />
+		<label for="textarea">Text Area</label>
+		<textarea id="textarea">This is a text area.</textarea>
+		<br />
+		<br />
+		<button id="buttonButton" name="buttonButton">Button</button>
+	</fieldset><!-- end #fieldType -->
+</form>
+</body>
+</html>
