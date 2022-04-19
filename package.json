@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://pbjoiner@bitbucket.org/engagegroup/teg-jquery-utilities.git"
+    "url": "git+https://github.com/pbjTEG/teg-jquery-utilities.git"
   },
   "keywords": [
     "convenience",
