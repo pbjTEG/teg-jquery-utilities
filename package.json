@@ -19,7 +19,8 @@
     "between",
     "fieldType",
     "getAny",
-    "setAny"
+    "setAny",
+    "preloadImages"
   ],
   "author": "Paul B. Joiner <paulj@engageyourcause.com>",
   "license": "MIT",
