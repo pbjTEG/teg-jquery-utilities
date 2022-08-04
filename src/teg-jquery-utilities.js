@@ -14,7 +14,7 @@
  *
  */
 
-(function($) {
+(function ($) {
 	/**
 	 * between
 	 * Determine if the value of an input field is in a specified range.
@@ -26,7 +26,7 @@
 	 * @returns {boolean} True if the value of THIS is a
 	 * number in the specified range.
 	 */
-	$.fn.between = function(minimum, maximum, inclusive) {
+	$.fn.between = function (minimum, maximum, inclusive) {
 		return $.between((isNaN(parseFloat(this.val())) ? 0 : +this.val()), minimum, maximum, (inclusive || false));
 	}; // end $.fn.between()
 
@@ -37,7 +37,7 @@
 	 *
 	 * @returns {string|*} input field type or node name if not an input field
 	 */
-	$.fn.fieldType = function() {
+	$.fn.fieldType = function () {
 		let returnVal = '';
 
 		// if it's an empty set, return an empty string
@@ -61,7 +61,7 @@
 	 *
 	 * @returns {jQuery|string} the value of the input field, if any
 	 */
-	$.fn.getAny = function() {
+	$.fn.getAny = function () {
 		let returnValue = '';
 
 		switch (this.fieldType()) {
@@ -94,7 +94,7 @@
 	 * @param {String} value, any value which the field can accept
 	 * @returns {jQuery} the jQuery object
 	 */
-	$.fn.setAny = function(value) {
+	$.fn.setAny = function (value) {
 
 		/* Return true if successfully set and trigger the
 		 * onChange handler while we're at it.
@@ -126,6 +126,30 @@
 		return this;
 	}; // end setAny()
 
+	/**
+	 * addCMSLandmarks
+	 * Add role attributes using a CMS's ability to add class names.
+	 *
+	 * @param {String} prefix, CSS class name prefix to use for role attribute value
+	 * @param {Array} allowed, list of allowed rote attribute values
+	 */
+	$.fn.addCMSLandmarks = function (prefix = 'aria-landmark-', allowed = ['banner', 'complementary', 'contentinfo', 'form', 'main', 'navigation', 'region',
+	                                                                       'search', 'alert', 'log', 'marquee', 'status', 'timer']) {
+		for (let counter = 0; counter < this.length; counter++) {
+			let element = this[counter];
+			element.classList.forEach(function (item) {
+				const roleValue = item.substring(item.indexOf('aria-landmark-') + 14);
+
+				if (element.getAttribute('role') === null &&
+				    allowed.includes(roleValue))
+				{
+					element.setAttribute('role', roleValue)
+				}
+			});
+		}
+		return this;
+	}
+
 	/* Allow window size flags to auto update and fire a callback.
 	 * This feature must be specifically initialized.
 	 */
@@ -140,14 +164,14 @@
 		          * @param {boolean} inclusive, whether to include the end points as acceptable values
 		          * @returns {boolean} TRUE if value is between minimum and maximum
 		          */
-		         between : function(value, minimum, maximum, inclusive) {
+		         between: function (value, minimum, maximum, inclusive) {
 			         // bulletproof the arguments
-			         const btwnValue     = value || 0,
-			               getMinimum    = minimum || 0,
-			               getMaximum    = maximum || 0,
-			               btwnMinimum   = Math.min(getMinimum, getMaximum),
-			               btwnMaximum   = Math.max(getMinimum, getMaximum),
-			               btwnInclusive = inclusive || false;
+			         const btwnValue = value || 0,
+					         getMinimum = minimum || 0,
+					         getMaximum = maximum || 0,
+					         btwnMinimum = Math.min(getMinimum, getMaximum),
+					         btwnMaximum = Math.max(getMinimum, getMaximum),
+					         btwnInclusive = inclusive || false;
 
 			         // if inclusive, do inclusive comparison
 			         if (btwnInclusive) {
@@ -163,15 +187,15 @@
 		          * windowSize
 		          * An object to monitor the size of the viewable browser window.
 		          */
-		         windowSize : {
-			         options : {
-				         mobileMaxWidth  : 600,
-				         tabletMinWidth  : 599,
-				         tabletMaxWidth  : 961,
-				         desktopMinWidth : 968,
-				         tallMinHeight   : 820,
+		         windowSize: {
+			         options: {
+				         mobileMaxWidth: 600,
+				         tabletMinWidth: 599,
+				         tabletMaxWidth: 961,
+				         desktopMinWidth: 968,
+				         tallMinHeight: 820,
 				         // allow customizable callback
-				         afterWindowSize : function() {
+				         afterWindowSize: function () {
 
 					         if (console) {
 						         console.log('$.afterWindowSize.afterWindowSize() default does nothing.');
@@ -181,10 +205,10 @@
 			         }, // end options
 
 			         // window size flags
-			         isMobile  : false,
-			         isTablet  : false,
-			         isDesktop : false,
-			         isTall    : false,
+			         isMobile: false,
+			         isTablet: false,
+			         isDesktop: false,
+			         isTall: false,
 
 			         /**
 			          * init
@@ -194,7 +218,7 @@
 			          * size specifications for each device type. See options
 			          * collection above.
 			          */
-			         init : function(Options) {
+			         init: function (Options) {
 				         // load optional options, optionally
 				         $.extend($.windowSize.options, Options || {});
 				         $.windowSize.update();
@@ -206,7 +230,7 @@
 			          * specifications in options above. Ment to attach to
 			          * window.onResize.
 			          */
-			         update : function() {
+			         update: function () {
 				         $.windowSize.isMobile = (window.innerWidth < $.windowSize.options.mobileMaxWidth);
 				         $.windowSize.isTablet = (window.innerWidth > $.windowSize.options.tabletMinWidth &&
 				                                  window.innerWidth < $.windowSize.options.tabletMaxWidth);
@@ -226,16 +250,16 @@
 		          * @param {Array} otherArgs, an array of any other arguments needed by the function
 		          * @returns {Function} a wrapper around originalFunction that limits execution
 		          */
-		         debounce : function(originalFunction, timeout, otherArgs) {
+		         debounce: function (originalFunction, timeout, otherArgs) {
 			         let timer;
 			         // make otherArgs optional
 			         otherArgs = otherArgs || [];
 
-			         return function() {
+			         return function () {
 				         // ignore all calls until there aren't any for the specified period
 				         clearTimeout(timer);
 				         // set a new timeout for the specified delay
-				         timer = setTimeout(function() {
+				         timer = setTimeout(function () {
 					         // call the function in context and with additional arguments
 					         originalFunction.apply(this, otherArgs);
 				         }, timeout);
@@ -251,12 +275,12 @@
 		          * @param {Array} [otherArgs], an array of any other arguments needed by the function
 		          * @returns {Function} a wrapper around originalFunction that limits execution
 		          */
-		         throttle : function(originalFunction, timeout, otherArgs) {
+		         throttle: function (originalFunction, timeout, otherArgs) {
 			         let needInvoke = true;
 			         // make otherArgs optional
 			         otherArgs = otherArgs || [];
 
-			         return function() {
+			         return function () {
 				         if (!needInvoke) return;
 
 				         // prevent next run
@@ -264,7 +288,7 @@
 				         // call the function in context and with additional arguments
 				         originalFunction.apply(this, otherArgs);
 				         // try again after the timeout
-				         setTimeout(function() { needInvoke = true; }, timeout);
+				         setTimeout(function () { needInvoke = true; }, timeout);
 			         }; // end throttling wrapper
 		         }, // end throttle()
 
@@ -275,7 +299,7 @@
 		          * @param {String[, String, ...]} arguments, one or more strings containing valid image URLs
 		          * @returns {jQuery} a jQuery object containing the preloaded images
 		          */
-		         preloadImages : function() {
+		         preloadImages: function () {
 			         let returnImages = jQuery('<img id="preloadImagesPlaceholder" />');
 
 			         for (let offset in arguments) {

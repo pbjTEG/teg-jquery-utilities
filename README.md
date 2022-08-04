@@ -40,11 +40,11 @@ jQuery('[name="foo"]').between(2, 5);
 ```
 
 
-| parameter | type | required | default |
-|---|---|---|---|
-| minimum | numeric | required |  |
-| maximum | numeric | required |  |
-| inclusive | boolean | optional | false |
+| parameter | type | is required | default |
+|---|---|-------------|---|
+| minimum | numeric | required    |  |
+| maximum | numeric | required    |  |
+| inclusive | boolean | optional    | false |
 
 As above but this version pulls the `<value>` from the first HTML element represented by the jQuery object. This will return `false` if the value is non-numeric.
 
@@ -88,13 +88,49 @@ Usage:
 jQuery(selector).setAny(value);
 ```
 
-| parameter | type | required |
-|---|---|---|
-| value | any | required |
+| parameter | type | is required |
+|---|---|-------------|
+| value | any | required    |
 
 Sets the value of the form field represented by the first HTML element in the jQuery object. If the element is not a form field, this will silently fail. This function will select a radio button in a radio button group that has a matching value. The same goes for a matching select option. If the parameter is "truthy," a checkbox will be checked. Any other field type will simply have the `value` attribute set.
 
 For radio buttons and check boxes, the `onClick` event handler will be triggered. For all other HTML element types, the `onChange` event handler will be triggered.
+
+### .addCMSLandmarks()
+
+Usage:
+
+```javascript
+jQuery(selector).addCMSLandmarks(prefix, allowed)
+```
+
+| parameter | type | is required | default |
+|---|------|---|-------------|
+| prefix | string | optional    | "aria-landmark-" |
+| allowed | array of string | optional | ['banner', 'complementary', 'contentinfo', 'form', 'main', 'navigation', 'region', 'search', 'alert', 'log', 'marquee', 'status', 'timer'] |
+|
+
+For each HTML element in the collection, adds a `role` attribute with the value specified by a class name starting with the optional `prefix`. Only those values specified in the optional `allowed` array will be set. Additionally, an existing `role` attribute will not be changed. For example:
+
+```javascript
+jQuery('[class*="aria-landmark-"]').addCMSLandmarks();
+```
+
+. . .will change the following:
+
+```html
+<div class="foo aria-landmark-region">...</div>
+<div class="bar aria-landmark-search" role="banner">...</div>
+```
+
+. . .to this:
+
+```html
+<div class="foo aria-landmark-region" role="region">...</div>
+<div class="bar aria-landmark-search" role="banner">...</div>
+```
+
+The first `div` is updated with the role specified by `aria-landmark-region`. The second `div` is not modified since the `role` attribute already exists. Multiple, `aria-landmark-` classes are ignored.
 
 ### <span id="windowSize"></span>jQuery.windowSize()
 

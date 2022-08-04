@@ -282,4 +282,18 @@ describe('TEGUtilities', function() {
 			expect(isLoaded).toBeTrue();
 		});
 	}); // end describe('preloadImages()')
+
+	describe('addCMSLandmarks', () => {
+		beforeAll(() => {
+			jQuery('[class*="aria-landmark-"]').addCMSLandmarks();
+		})
+		it('should add a role for valid landmark values', () => {
+			expect(jQuery('[role="banner"]').length).toBe(1);
+			expect(jQuery('[role="navigation"]').length).toBe(1);
+			expect(jQuery('[role="contentinfo"]').length).toBe(1);
+		}); // end it('should add a role for valid landmark values')
+		it('should exclude invalid landmarks', () => {
+			expect(document.querySelector('[role="header"]')).toBeNull();
+		}); // end it('should exclude invalid landmarks')
+	}); // end describe('addCMSLandmarks')
 }); // end describe('specs')
