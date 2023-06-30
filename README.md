@@ -1,13 +1,19 @@
 # TEG jQuery Utilities #
 
-A few handy utilities.
+A few handy utilities for a jQuery project.
+
+## Requires ##
+
+[jQuery 3.6+]( https://releases.jquery.com/)
+
+## Methods ##
 
 ### jQuery.between() ###
 
 Usage:
 
 ```javascript
-jQuery.between(value, minimum, maximum, inclusive);
+jQuery.between( value, minimum, maximum, inclusive );
 ```
 
 | parameter | type | required | default |
@@ -17,7 +23,7 @@ jQuery.between(value, minimum, maximum, inclusive);
 | maximum | numeric | required |  |
 | inclusive | boolean | optional | false |
 
-Returns `true` if `<value>` is inside the range specified by `minimum` and `maximum`. If `inclusive` is `true` then the minimum and maximum values are included in the range comparison.
+Returns `true` if `value` is inside the range specified by `minimum` and `maximum`. If `inclusive` is `true` then the minimum and maximum values are included in the range comparison.
 
 The implementation contains a little bullet proofing to defend against badly formed parameters. It is best not to rely on that.
 
@@ -26,7 +32,7 @@ The implementation contains a little bullet proofing to defend against badly for
 Usage:
 
 ```javascript
-jQuery(selector).between(minimum, maximum, inclusive);
+jQuery( selector ).between( minimum, maximum, inclusive );
 ```
 
 Example:
@@ -46,14 +52,14 @@ jQuery('[name="foo"]').between(2, 5);
 | maximum | numeric | required    |  |
 | inclusive | boolean | optional    | false |
 
-As above but this version pulls the `<value>` from the first HTML element represented by the jQuery object. This will return `false` if the value is non-numeric.
+As above but this version pulls the `value` from the first HTML element represented by the jQuery object. This will return `false` if the value is non-numeric.
 
  Since this function returns a value, it bust be at the end of any chain of calls.
 
 ```javascript
 jQuery('input')
    .filter('[type="text"]')
-   .between(4, 15, false);
+   .between(5, 15, false);
 ```
 
 ### .fieldType() ###
@@ -61,7 +67,7 @@ jQuery('input')
 Usage:
 
 ```javascript
-jQuery(selector).fieldType();
+jQuery( selector ).fieldType();
 ```
 
 Returns a string which indicates the type form field represented by the first element in the jQuery object. If the HTML element is not a form field, this returns the tag name. This is a shortcut to `node.type` and then to `node.nodeName`.
@@ -73,7 +79,7 @@ Returns a string which indicates the type form field represented by the first el
 Usage:
 
 ```javascript
-jQuery(selector).getAny();
+jQuery( selector ).getAny();
 ```
 
 Returns the current value of the form field represented by the first HTML element in the jQuery object. If the element is not a form field, returns an empty string. This allows us to get around filtering for the selected radio button or checkbox. We don't have to know how the client has altered the configuration of the form field.
@@ -85,7 +91,7 @@ Returns the current value of the form field represented by the first HTML elemen
 Usage:
 
 ```javascript
-jQuery(selector).setAny(value);
+jQuery( selector ).setAny( value );
 ```
 
 | parameter | type | is required |
@@ -101,7 +107,7 @@ For radio buttons and check boxes, the `onClick` event handler will be triggered
 Usage:
 
 ```javascript
-jQuery(selector).addCMSLandmarks(prefix, allowed)
+jQuery( selector ).addCMSLandmarks( prefix, allowed )
 ```
 
 | parameter | type | is required | default |
@@ -110,7 +116,7 @@ jQuery(selector).addCMSLandmarks(prefix, allowed)
 | allowed | array of string | optional | ['banner', 'complementary', 'contentinfo', 'form', 'main', 'navigation', 'region', 'search', 'alert', 'log', 'marquee', 'status', 'timer'] |
 |
 
-For each HTML element in the collection, adds a `role` attribute with the value specified by a class name starting with the optional `prefix`. Only those values specified in the optional `allowed` array will be set. Additionally, an existing `role` attribute will not be changed. For example:
+For each HTML element in the array, adds a `role` attribute with the value specified by a class name starting with the optional `prefix`. Only those values specified in the optional `allowed` array will be set. Additionally, an existing `role` attribute will not be changed. For example:
 
 ```javascript
 jQuery('[class*="aria-landmark-"]').addCMSLandmarks();
@@ -132,6 +138,15 @@ jQuery('[class*="aria-landmark-"]').addCMSLandmarks();
 
 The first `div` is updated with the role specified by `aria-landmark-region`. The second `div` is not modified since the `role` attribute already exists. Multiple, `aria-landmark-` classes are ignored.
 
+### <span id="getPath"></span>.getCSSPath()
+
+Usage:
+```javascript
+jQuery( selector ).getCSSPath()
+```
+
+For a single item in the array, generate a unique CSS selector path. For when the HTML cannot be altered but an element must be uniquely identified. This will end with the `html` element or the closest element with an `id` attribute.
+
 ### <span id="windowSize"></span>jQuery.windowSize()
 
 Usage:
@@ -139,11 +154,11 @@ Usage:
 Initialize with window size breakpoints and method to run after window size changes.
 
 ```javascript
-jQuery.windowSize.init([options]);
+jQuery.windowSize.init({options});
 ```
-| parameter | type | required | default |
-|---|---|---|---|
-| options | collection | optional | see below |
+| parameter | type         | required | default |
+|---|--------------|---|---|
+| options | plain object | optional | see below |
 
 | option | type | required | default |
 |---|---|---|---|
@@ -178,7 +193,7 @@ Use (`throttle()`)[#throttle] on the `update()` method if attaching to a `window
 Usage:
 
 ```javascript
-jQuery.debounce(originalFunction, timeout, [otherArguments]);
+jQuery.debounce( originalFunction, timeout, [otherArguments]);
 ```
 
 | parameter | type | required | default |
@@ -194,7 +209,7 @@ Prevents a function from running until a specified time period has elapsed since
 Usage:
 
 ```javascript
-jQuery.throttle(originalFunction, timeout, [otherArguments]);
+jQuery.throttle( originalFunction, timeout, [otherArguments]);
 ```
 
 | parameter | type | required | default |
@@ -210,7 +225,7 @@ Prevents a function from more often than a specified time period. The function p
 Usage:
 
 ```javascript
-jQuery.preloadImages(URL[, URL, ...]);
+jQuery.preloadImages( URL[, URL, ...]);
 ```
 
 | parameter | type | required | default |

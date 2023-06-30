@@ -296,4 +296,12 @@ describe('TEGUtilities', function() {
 			expect(document.querySelector('[role="header"]')).toBeNull();
 		}); // end it('should exclude invalid landmarks')
 	}); // end describe('addCMSLandmarks')
+
+	describe('getCSSPath', () => {
+		it('should get the path of an element', () => {
+			expect(jQuery('label[for="text"]').getCSSPath()).toBe('label:nth-child(21)');
+			expect(jQuery('#select-multiple').getCSSPath()).toBe('#select-multiple');
+			expect(jQuery('.aria-landmark-navigation').getCSSPath()).toBe('div.aria-landmark-navigation');
+		}); // end it('should get the path of an element')
+	})
 }); // end describe('specs')

@@ -109,8 +109,7 @@
 				 * event listeners are triggered.
 				 */
 				if (value &&
-				    this.val() === value)
-				{
+						this.val() === value) {
 					this.prop('checked', false).click();
 
 				} else {
@@ -120,7 +119,7 @@
 
 			default:
 				this.val(value)
-				    .change();
+						.change();
 		}
 
 		return this;
@@ -134,179 +133,221 @@
 	 * @param {Array} allowed, list of allowed rote attribute values
 	 */
 	$.fn.addCMSLandmarks = function (prefix = 'aria-landmark-', allowed = ['banner', 'complementary', 'contentinfo', 'form', 'main', 'navigation', 'region',
-	                                                                       'search', 'alert', 'log', 'marquee', 'status', 'timer']) {
+		'search', 'alert', 'log', 'marquee', 'status', 'timer']) {
 		for (let counter = 0; counter < this.length; counter++) {
 			let element = this[counter];
 			element.classList.forEach(function (item) {
 				const roleValue = item.substring(item.indexOf('aria-landmark-') + 14);
 
 				if (element.getAttribute('role') === null &&
-				    allowed.includes(roleValue))
-				{
+						allowed.includes(roleValue)) {
 					element.setAttribute('role', roleValue)
 				}
 			});
 		}
 		return this;
-	}
+	}; // end addCMSLandmarks()
+
+	/**
+	 * getPath
+	 * Recursively generate the CSS selector path of an HTML element.
+	 *
+	 * @param path {string} path of child object, empty if beginning of search
+	 * @returns {string|*|string} completed path
+	 */
+	$.fn.getCSSPath = function (path = '') {
+
+		// If this element is <html> we've reached the end of the path.
+		if (this.is('html')) return `html${path}`;
+
+		// Shortcut for ID
+		const id = this.attr('id');
+
+		if (typeof id !== 'undefined') return `#${id}${path}`;
+
+		let cur = this.get(0).nodeName.toLowerCase();
+		const className = this.attr('class');
+
+		// Add class names, if any
+		if (typeof className !== 'undefined') cur += '.' + className.split(/[\s\n]+/).join('.');
+
+		// add nth-child if there's more than one like this
+		if (document.querySelectorAll(cur).length > 1) cur += `:nth-child(${this.index() + 1})`;
+
+		// check for uniqueness and shortcut
+		if (document.querySelectorAll(`${cur}${path}`).length === 1) return `${cur}${path}`;
+
+		// Recursion 'cuz memory is cheap. >8)
+		return this.parent().getCSSPath(` > ${cur}${path}`);
+	}; // end getCSSPath()
 
 	/* Allow window size flags to auto update and fire a callback.
 	 * This feature must be specifically initialized.
 	 */
 	$.extend({
-		         /**
-		          * $.between
-		          * Reurns TRUE if value is between minimum and maximum.
-		          *
-		          * @param {Integer} value, number to test
-		          * @param {Integer} minimum, lowest point of accetptable range
-		          * @param {Integer} maximum, highest point of acceptable range
-		          * @param {boolean} inclusive, whether to include the end points as acceptable values
-		          * @returns {boolean} TRUE if value is between minimum and maximum
-		          */
-		         between: function (value, minimum, maximum, inclusive) {
-			         // bulletproof the arguments
-			         const btwnValue = value || 0,
-					         getMinimum = minimum || 0,
-					         getMaximum = maximum || 0,
-					         btwnMinimum = Math.min(getMinimum, getMaximum),
-					         btwnMaximum = Math.max(getMinimum, getMaximum),
-					         btwnInclusive = inclusive || false;
+		/**
+		 * $.between
+		 * Reurns TRUE if value is between minimum and maximum.
+		 *
+		 * @param {Integer} value, number to test
+		 * @param {Integer} minimum, lowest point of accetptable range
+		 * @param {Integer} maximum, highest point of acceptable range
+		 * @param {boolean} inclusive, whether to include the end points as acceptable values
+		 * @returns {boolean} TRUE if value is between minimum and maximum
+		 */
+		between: function (value, minimum, maximum, inclusive) {
+			// bulletproof the arguments
+			const btwnValue = value || 0,
+					getMinimum = minimum || 0,
+					getMaximum = maximum || 0,
+					btwnMinimum = Math.min(getMinimum, getMaximum),
+					btwnMaximum = Math.max(getMinimum, getMaximum),
+					btwnInclusive = inclusive || false;
 
-			         // if inclusive, do inclusive comparison
-			         if (btwnInclusive) {
-				         return btwnValue >= btwnMinimum && btwnValue <= btwnMaximum;
+			// if inclusive, do inclusive comparison
+			if (btwnInclusive) {
+				return btwnValue >= btwnMinimum && btwnValue <= btwnMaximum;
 
-			         } else {
-				         // otherwise, do exclusive comparison
-				         return btwnValue > btwnMinimum && btwnValue < btwnMaximum;
-			         }
-		         }, // end between()
+			} else {
+				// otherwise, do exclusive comparison
+				return btwnValue > btwnMinimum && btwnValue < btwnMaximum;
+			}
+		}, // end between()
 
-		         /**
-		          * windowSize
-		          * An object to monitor the size of the viewable browser window.
-		          */
-		         windowSize: {
-			         options: {
-				         mobileMaxWidth: 600,
-				         tabletMinWidth: 599,
-				         tabletMaxWidth: 961,
-				         desktopMinWidth: 968,
-				         tallMinHeight: 820,
-				         // allow customizable callback
-				         afterWindowSize: function () {
+		/**
+		 * windowSize
+		 * An object to monitor the size of the viewable browser window.
+		 */
+		windowSize: {
+			options: {
+				mobileMaxWidth: 600,
+				tabletMinWidth: 599,
+				tabletMaxWidth: 961,
+				desktopMinWidth: 968,
+				tallMinHeight: 820,
+				// allow customizable callback
+				afterWindowSize: function () {
 
-					         if (console) {
-						         console.log('$.afterWindowSize.afterWindowSize() default does nothing.');
-					         } // end log
-					         return false;
-				         }, // end afterWindowSize()
-			         }, // end options
+					if (console) {
+						console.log('%c$.afterWindowSize.afterWindowSize() %cdefault does nothing.', 'font-weight: bold; color: yellow;', 'font-weight: bold; color: white;');
+						console.log('%c this.mobileMaxWidth', 'font-weight: bold; color: white;');
+						console.dir(this.mobileMaxWidth)
+						console.log('%c this.tabletMinWidth', 'font-weight: bold; color: white;');
+						console.dir(this.tabletMinWidth)
+						console.log('%c this.tabletMaxWidth', 'font-weight: bold; color: white;');
+						console.dir(this.tabletMaxWidth)
+						console.log('%c this.desktopMinWidth', 'font-weight: bold; color: white;');
+						console.dir(this.desktopMinWidth)
+						console.log('%c this.tallMinHeight', 'font-weight: bold; color: white;');
+						console.dir(this.tallMinHeight)
+					} // end log
+					return false;
+				}, // end afterWindowSize()
+			}, // end options
 
-			         // window size flags
-			         isMobile: false,
-			         isTablet: false,
-			         isDesktop: false,
-			         isTall: false,
+			// window size flags
+			isMobile: false,
+			isTablet: false,
+			isDesktop: false,
+			isTall: false,
 
-			         /**
-			          * init
-			          * Initialize a new windowSize member object.
-			          *
-			          * @param {Collection} Options; a collection of window
-			          * size specifications for each device type. See options
-			          * collection above.
-			          */
-			         init: function (Options) {
-				         // load optional options, optionally
-				         $.extend($.windowSize.options, Options || {});
-				         $.windowSize.update();
-			         }, // end init()
+			/**
+			 * init
+			 * Initialize a new windowSize member object.
+			 *
+			 * @param {Collection} Options; a collection of window
+			 * size specifications for each device type. See options
+			 * collection above.
+			 */
+			init: function (Options) {
+				// load optional options, optionally
+				$.extend($.windowSize.options, Options || {});
+				$.windowSize.update();
+			}, // end init()
 
-			         /**
-			          * update
-			          * Updates the window size flags above based upon the
-			          * specifications in options above. Ment to attach to
-			          * window.onResize.
-			          */
-			         update: function () {
-				         $.windowSize.isMobile = (window.innerWidth < $.windowSize.options.mobileMaxWidth);
-				         $.windowSize.isTablet = (window.innerWidth > $.windowSize.options.tabletMinWidth &&
-				                                  window.innerWidth < $.windowSize.options.tabletMaxWidth);
-				         $.windowSize.isDesktop = (window.innerWidth > $.windowSize.options.desktopMinWidth);
-				         $.windowSize.isTall = (window.innerHeight > $.windowSize.options.tallMinHeight);
-				         // run the post-update function
-				         $.windowSize.options.afterWindowSize();
-			         }, // end update()
-		         }, // end $.windowSize
+			/**
+			 * update
+			 * Updates the window size flags above based upon the
+			 * specifications in options above. Ment to attach to
+			 * window.onResize.
+			 */
+			update: function () {
+				$.windowSize.isMobile = (window.innerWidth < $.windowSize.options.mobileMaxWidth);
+				$.windowSize.isTablet = (window.innerWidth > $.windowSize.options.tabletMinWidth &&
+						window.innerWidth < $.windowSize.options.tabletMaxWidth);
+				$.windowSize.isDesktop = (window.innerWidth > $.windowSize.options.desktopMinWidth);
+				$.windowSize.isTall = (window.innerHeight > $.windowSize.options.tallMinHeight);
+				// run the post-update function
+				$.windowSize.options.afterWindowSize();
+			}, // end update()
+		}, // end $.windowSize
 
-		         /**
-		          * debounce
-		          * Wait to run a function until a certain time has passed since the last call.
-		          *
-		          * @param {Function} originalFunction, original function
-		          * @param {Number} timeout, timeout in milliseconds for setTimout() call
-		          * @param {Array} otherArgs, an array of any other arguments needed by the function
-		          * @returns {Function} a wrapper around originalFunction that limits execution
-		          */
-		         debounce: function (originalFunction, timeout, otherArgs) {
-			         let timer;
-			         // make otherArgs optional
-			         otherArgs = otherArgs || [];
+		/**
+		 * debounce
+		 * Wait to run a function until a certain time has passed since the last call.
+		 *
+		 * @param {Function} originalFunction, original function
+		 * @param {Number} timeout, timeout in milliseconds for setTimout() call
+		 * @param {Array} otherArgs, an array of any other arguments needed by the function
+		 * @returns {Function} a wrapper around originalFunction that limits execution
+		 */
+		debounce: function (originalFunction, timeout, otherArgs) {
+			let timer;
+			// make otherArgs optional
+			otherArgs = otherArgs || [];
 
-			         return function () {
-				         // ignore all calls until there aren't any for the specified period
-				         clearTimeout(timer);
-				         // set a new timeout for the specified delay
-				         timer = setTimeout(function () {
-					         // call the function in context and with additional arguments
-					         originalFunction.apply(this, otherArgs);
-				         }, timeout);
-			         }; // return the function wrapped in a setTimeout structure
-		         }, // end debounce()
+			return function () {
+				// ignore all calls until there aren't any for the specified period
+				clearTimeout(timer);
+				// set a new timeout for the specified delay
+				timer = setTimeout(function () {
+					// call the function in context and with additional arguments
+					originalFunction.apply(this, otherArgs);
+				}, timeout);
+			}; // return the function wrapped in a setTimeout structure
+		}, // end debounce()
 
-		         /**
-		          * throttle
-		          * Don't run a function more often than a certain period of time.
-		          *
-		          * @param {Function} originalFunction, original function
-		          * @param {Number} timeout, timeout in milliseconds for setTimout() call
-		          * @param {Array} [otherArgs], an array of any other arguments needed by the function
-		          * @returns {Function} a wrapper around originalFunction that limits execution
-		          */
-		         throttle: function (originalFunction, timeout, otherArgs) {
-			         let needInvoke = true;
-			         // make otherArgs optional
-			         otherArgs = otherArgs || [];
+		/**
+		 * throttle
+		 * Don't run a function more often than a certain period of time.
+		 *
+		 * @param {Function} originalFunction, original function
+		 * @param {Number} timeout, timeout in milliseconds for setTimout() call
+		 * @param {Array} [otherArgs], an array of any other arguments needed by the function
+		 * @returns {Function} a wrapper around originalFunction that limits execution
+		 */
+		throttle: function (originalFunction, timeout, otherArgs) {
+			let needInvoke = true;
+			// make otherArgs optional
+			otherArgs = otherArgs || [];
 
-			         return function () {
-				         if (!needInvoke) return;
+			return function () {
+				if (!needInvoke) return;
 
-				         // prevent next run
-				         needInvoke = false;
-				         // call the function in context and with additional arguments
-				         originalFunction.apply(this, otherArgs);
-				         // try again after the timeout
-				         setTimeout(function () { needInvoke = true; }, timeout);
-			         }; // end throttling wrapper
-		         }, // end throttle()
+				// prevent next run
+				needInvoke = false;
+				// call the function in context and with additional arguments
+				originalFunction.apply(this, otherArgs);
+				// try again after the timeout
+				setTimeout(function () { needInvoke = true; }, timeout);
+			}; // end throttling wrapper
+		}, // end throttle()
 
-		         /**
-		          * preloadImages
-		          * Allow preload of images for faster update of display.
-		          *
-		          * @param {String[, String, ...]} arguments, one or more strings containing valid image URLs
-		          * @returns {jQuery} a jQuery object containing the preloaded images
-		          */
-		         preloadImages: function () {
-			         let returnImages = jQuery('<img id="preloadImagesPlaceholder" />');
+		/**
+		 * preloadImages
+		 * Allow preload of images for faster update of display.
+		 *
+		 * @param {String[, String, ...]} arguments, one or more strings containing valid image URLs
+		 * @returns {jQuery} a jQuery object containing the preloaded images
+		 */
+		preloadImages: function () {
+			let returnImages = jQuery('<img id="preloadImagesPlaceholder" />');
 
-			         for (let offset in arguments) {
-				         returnImages = returnImages.add(jQuery('<img />').prop('src', arguments[offset]));
-			         }
+			for (let offset in arguments) {
+				returnImages = returnImages.add(jQuery('<img />').prop('src', arguments[offset]));
+			}
 
-			         return returnImages.filter(':not(#preloadImagesPlaceholder)');
-		         },
-	         }); // end $.extend()
+			return returnImages.filter(':not(#preloadImagesPlaceholder)');
+		},
+	}); // end $.extend()
 })(jQuery); // end IIFE
