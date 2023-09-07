@@ -19,12 +19,10 @@
 	 * between
 	 * Determine if the value of an input field is in a specified range.
 	 *
-	 * @param {Integer} minimum: lowest allowed value
-	 * @param {Integer} maximum: highest allowed value
-	 * @param {Boolean} inclusive: if True, include the
-	 * minimum and maximum as allowable values
-	 * @returns {boolean} True if the value of THIS is a
-	 * number in the specified range.
+	 * @param {integer} minimum - lowest allowed value
+	 * @param {integer} maximum - highest allowed value
+	 * @param {boolean} inclusive - if True, include the minimum and maximum as allowable values
+	 * @returns {boolean} True if the value of THIS is a number in the specified range.
 	 */
 	$.fn.between = function (minimum, maximum, inclusive) {
 		return $.between((isNaN(parseFloat(this.val())) ? 0 : +this.val()), minimum, maximum, (inclusive || false));
@@ -35,7 +33,7 @@
 	 * fieldType
 	 * Get type of input field even if it's not actually an input field.
 	 *
-	 * @returns {string|*} input field type or node name if not an input field
+	 * @returns {string} input - field type or node name if not an input field
 	 */
 	$.fn.fieldType = function () {
 		let returnVal = '';
@@ -59,7 +57,7 @@
 	 * getAny
 	 * Get the value of an input field without knowning what kind it is.
 	 *
-	 * @returns {jQuery|string} the value of the input field, if any
+	 * @returns {string} the value of the input field, if any
 	 */
 	$.fn.getAny = function () {
 		let returnValue = '';
@@ -129,8 +127,8 @@
 	 * addCMSLandmarks
 	 * Add role attributes using a CMS's ability to add class names.
 	 *
-	 * @param {String} prefix, CSS class name prefix to use for role attribute value
-	 * @param {Array} allowed, list of allowed rote attribute values
+	 * @param {string} prefix - CSS class name prefix to use for role attribute value
+	 * @param {array} [allowed] - list of allowed rote attribute values
 	 */
 	$.fn.addCMSLandmarks = function (prefix = 'aria-landmark-', allowed = ['banner', 'complementary', 'contentinfo', 'form', 'main', 'navigation', 'region',
 		'search', 'alert', 'log', 'marquee', 'status', 'timer']) {
@@ -152,8 +150,8 @@
 	 * getPath
 	 * Recursively generate the CSS selector path of an HTML element.
 	 *
-	 * @param path {string} path of child object, empty if beginning of search
-	 * @returns {string|*|string} completed path
+	 * @param {string} [path] - path of child object, empty if beginning of search
+	 * @returns {string} completed path
 	 */
 	$.fn.getCSSPath = function (path = '') {
 
@@ -189,10 +187,10 @@
 		 * $.between
 		 * Reurns TRUE if value is between minimum and maximum.
 		 *
-		 * @param {Integer} value, number to test
-		 * @param {Integer} minimum, lowest point of accetptable range
-		 * @param {Integer} maximum, highest point of acceptable range
-		 * @param {boolean} inclusive, whether to include the end points as acceptable values
+		 * @param {integer} value - number to test
+		 * @param {integer} minimum - lowest point of accetptable range
+		 * @param {integer} maximu - highest point of acceptable range
+		 * @param {boolean} inclusive -  whether to include the end points as acceptable values
 		 * @returns {boolean} TRUE if value is between minimum and maximum
 		 */
 		between: function (value, minimum, maximum, inclusive) {
@@ -255,7 +253,7 @@
 			 * init
 			 * Initialize a new windowSize member object.
 			 *
-			 * @param {Collection} Options; a collection of window
+			 * @param {object} Options - a collection of window
 			 * size specifications for each device type. See options
 			 * collection above.
 			 */
@@ -282,13 +280,17 @@
 			}, // end update()
 		}, // end $.windowSize
 
+      /**
+       * @callback originalFunction
+       */
+
 		/**
 		 * debounce
 		 * Wait to run a function until a certain time has passed since the last call.
 		 *
-		 * @param {Function} originalFunction, original function
-		 * @param {Number} timeout, timeout in milliseconds for setTimout() call
-		 * @param {Array} otherArgs, an array of any other arguments needed by the function
+		 * @param {originalFunction} originalFunction - original function
+		 * @param {Number} timeout - timeout in milliseconds for setTimout() call
+		 * @param {Array} [otherArgs] - an array of any other arguments needed by the function
 		 * @returns {Function} a wrapper around originalFunction that limits execution
 		 */
 		debounce: function (originalFunction, timeout, otherArgs) {
@@ -311,9 +313,9 @@
 		 * throttle
 		 * Don't run a function more often than a certain period of time.
 		 *
-		 * @param {Function} originalFunction, original function
-		 * @param {Number} timeout, timeout in milliseconds for setTimout() call
-		 * @param {Array} [otherArgs], an array of any other arguments needed by the function
+		 * @param {originalFunction} originalFunction - original function
+		 * @param {Number} timeout - timeout in milliseconds for setTimout() call
+		 * @param {Array} [otherArgs] - an array of any other arguments needed by the function
 		 * @returns {Function} a wrapper around originalFunction that limits execution
 		 */
 		throttle: function (originalFunction, timeout, otherArgs) {
@@ -337,7 +339,7 @@
 		 * preloadImages
 		 * Allow preload of images for faster update of display.
 		 *
-		 * @param {String[, String, ...]} arguments, one or more strings containing valid image URLs
+		 * @param {string[, string, ...]} arguments - one or more strings containing valid image URLs
 		 * @returns {jQuery} a jQuery object containing the preloaded images
 		 */
 		preloadImages: function () {
