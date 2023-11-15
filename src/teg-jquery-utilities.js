@@ -346,10 +346,10 @@
 			let returnImages = jQuery('<img id="preloadImagesPlaceholder" />');
 
 			for (let offset in arguments) {
-				returnImages = returnImages.add(jQuery('<img />').prop('src', arguments[offset]));
+				returnImages = returnImages.add(jQuery('<link rel="preload" as="image" />').prop('href', arguments[offset]));
 			}
 
-			return returnImages.filter(':not(#preloadImagesPlaceholder)');
+			jQuery('head').append(returnImages.filter(':not(#preloadImagesPlaceholder)'));
 		},
 	}); // end $.extend()
 })(jQuery); // end IIFE

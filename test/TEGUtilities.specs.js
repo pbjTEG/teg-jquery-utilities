@@ -257,25 +257,14 @@ describe('TEGUtilities', function() {
 	describe('preloadImages()', function() {
 
 		it('should be preloaded', function() {
-			let isLoaded  = true,
-			    loadedSrc = [];
+			let isLoaded  = true;
 
-			// run the preloader and check if all the elements in the returned array have a source in the list of images
-			jQuery.preloadImages('preloadImages/carousel-defenders1.jpg', 'preloadImages/ff-20.jpg', 'preloadImages/hero-tscl-2.jpg')
-			      .each(function() {
-				      let thisSrc = jQuery(this).attr('src');
-				      loadedSrc.push(thisSrc);
-
-				      if (!['preloadImages/carousel-defenders1.jpg', 'preloadImages/ff-20.jpg', 'preloadImages/hero-tscl-2.jpg'].includes(thisSrc)) {
-					      isLoaded = false;
-				      }
-			      });
-
-			// check if all members of the list of images are in the array taken from the generated img elements
+			// run the preloader and check if all the elements exist in the head
+			jQuery.preloadImages('preloadImages/carousel-defenders1.jpg', 'preloadImages/ff-20.jpg', 'preloadImages/hero-tscl-2.jpg');
 			['preloadImages/carousel-defenders1.jpg', 'preloadImages/ff-20.jpg', 'preloadImages/hero-tscl-2.jpg']
 				.forEach(function(currentSrc) {
 
-					if (!loadedSrc.includes(currentSrc)) {
+					if (jQuery(`link[href="${currentSrc}"]`).length === 0) {
 						isLoaded = false;
 					}
 				});

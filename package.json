@@ -2,7 +2,7 @@
   "name": "teg-jquery-utilities",
   "title": "TEG jQuery Utilities",
   "description": "A few handy utilities.",
-  "version": "2.0",
+  "version": "2.1",
   "main": "src/teg-jquery-utilities.js",
   "directories": {
     "test": "test"
